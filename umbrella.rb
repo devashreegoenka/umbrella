@@ -7,10 +7,9 @@ pirate_weather_api_key = ENV.fetch("PIRATE_WEATHER_KEY")
 
 gmaps_api_key = ENV.fetch("GMAPS_KEY")
 
-
 pp "Where are you?"
-user_location = gets.chomp 
-
+#user_location = gets.chomp 
+user_location = "Chicago"
 
 gmaps_url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + user_location + "&key=" + gmaps_api_key
 
@@ -33,3 +32,21 @@ longitude = loc.fetch("lng")
 
 pp latitude
 pp longitude
+
+weather_url = "https://api.pirateweather.net/forecast/" + pirate_weather_api_key + "/" + latitude.to_s + "," +longitude.to_s
+
+resp2 = HTTP.get(weather_url)
+
+raw_response2 = resp2.to_s
+
+parsed_response2 = JSON.parse(raw_response2)
+
+pp parsed_response2
+
+pp parsed_response2.keys
+
+currently = parsed_responses2.fetch("currently")
+
+temp = currently.fetch("temperature")
+
+pp temp
